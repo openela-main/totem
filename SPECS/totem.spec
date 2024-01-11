@@ -4,7 +4,7 @@
 Name: totem
 Epoch: 1
 Version: 3.38.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Movie player for GNOME
 
 License: GPLv2+ with exceptions
@@ -73,8 +73,6 @@ Recommends: gstreamer1-plugins-bad-free%{?_isa}
 Obsoletes: totem-nautilus < 1:3.31.91
 # Removed in F31
 Obsoletes: totem-lirc < 1:3.33.0
-# Self-obsoletes to help with totem -> totem + totem-video-thumbnailer split in F34
-Obsoletes: totem < 1:3.38.0-4
 
 %description
 Totem is simple movie player for the GNOME desktop. It features a
@@ -85,8 +83,8 @@ Totem is extensible through a plugin system.
 
 %package video-thumbnailer
 Summary: Totem video thumbnailer
-# Self-obsoletes to help with totem -> totem + totem-video-thumbnailer split in F34
-Obsoletes: totem < 1:3.38.0-4
+# split out from totem package in F34
+Conflicts: totem < 1:3.38.0-4
 
 %description video-thumbnailer
 This package contains the Totem video thumbnailer.
@@ -178,6 +176,10 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/org.gnome.Totem.de
 %{_datadir}/gir-1.0/Totem-1.0.gir
 
 %changelog
+* Mon May 22 2023 Kalev Lember <klember@redhat.com> - 3.38.2-2
+- Use conflicts for totem-video-thumbnailer split instead of self-obsoletes
+- Resolves: rhbz#1949422
+
 * Mon Oct 18 2021 Bastien Nocera <bnocera@redhat.com> - 3.38.2-1
 + totem-3.38.2-1
 - Update to 3.38.2
